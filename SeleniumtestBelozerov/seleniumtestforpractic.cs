@@ -6,44 +6,35 @@ namespace SeleniumtestBelozerov;
 
 public class seleniumtestforpractic
 {
-        public ChromeDriver
-
-        [Test]
-        public void authorization()
-        {
-                // 231456
+    [Test]
+    public void authorization()
+    {
+        // 231456
 
 // зайти в хром  (с помощью вебдрайвера)
-                var driver = new ChromeDriver();
+        var driver = new ChromeDriver();
 
 // перейти по урлу https://staff-testing.testkontur.ru
-                driver.Navigate().GoToUrl("https://staff-testing.testkontur.ru");
-                Thread.Sleep(millisecondsTimeout: 5000);
+        driver.Navigate().GoToUrl("https://staff-testing.testkontur.ru");
+        Thread.Sleep(millisecondsTimeout:5000);
 
 // ввести логин и пароль
-                var login = driver.FindElement(By.Id("Username"));
-                login.SendKeys(text: "a.belozerov@skbkontur.ru");
-                var password = driver.FindElement(By.Name("Password"));
-                password.SendKeys("xPtqNJbcomETL7sSDnaCRMKr@");
-                Thread.Sleep(millisecondsTimeout: 5000);
+        var login = driver.FindElement(By.Id("Username"));
+        login.SendKeys(text:"a.belozerov@skbkontur.ru");
+        var password = driver.FindElement(By.Name("Password"));
+        password.SendKeys("xPtqNJbcomETL7sSDnaCRMKr@"); 
+        Thread.Sleep(millisecondsTimeout:5000);  
 // нажать на кнопку "войти"
-                var Enter = driver.FindElement(By.Name("button"));
-                Enter.Click();
-
+        var Enter = driver.FindElement(By.Name("button")); 
+        Enter.Click();
+        Thread.Sleep(millisecondsTimeout:5000);  
 
 // 7
 
 // проверяем что мы находимся на нужной странице 
-                var currentURL = driver.Url;
-                Assert.That(currentURL == "https://staff-testing.testkontur.ru/news2");
+        var currentURL = driver.Url;
+        Assert.That( currentURL == "https://staff-testing.testkontur.ru/news2");
 // закрываем браузер и убиваем процесс драйвера
-
-                [TearDown]
-                public void TearDown()
-                {
-                        driver.Quit();
-
-                }
-
-        }
+        driver.Quit();
+    }
 }
