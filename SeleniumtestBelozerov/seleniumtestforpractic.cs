@@ -1,40 +1,71 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Internal.Logging;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
-namespace SeleniumtestBelozerov;
+namespace ForGitExtensions;
 
-public class seleniumtestforpractic
+public class SeleniumTestsForPractice
 {
+
+    public ChromeDriver driver;
+
     [Test]
-    public void authorization()
+    public void Authorization()
     {
-        // 231456
+        var options = new ChromeOptions();
+        options.AddArguments("--no-sandbox", "--start-maximized", "--disable-extensions");
 
-// зайти в хром  (с помощью вебдрайвера)
-        var driver = new ChromeDriver();
+// - зайти в хром ( с помощью вебдрайвера)
+        driver = new ChromeDriver(options);
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5); // неявное ожидание
 
-// перейти по урлу https://staff-testing.testkontur.ru
+
+// - перейти по урлу https://staff-testing.testkontur.ru
+
         driver.Navigate().GoToUrl("https://staff-testing.testkontur.ru");
-        Thread.Sleep(millisecondsTimeout:5000);
 
-// ввести логин и пароль
+//Ожидание появления страницы и отрисовки элементов в верстке
+
+//Thread.Sleep(3000); - плохой вариант
+
+// var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3)); - явное ожидание
+// wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Username")));
+
+// - ввести логин и пароль
         var login = driver.FindElement(By.Id("Username"));
-        login.SendKeys(text:"a.belozerov@skbkontur.ru");
+        login.SendKeys("a.belozerov@skbkontur.ru");
+
         var password = driver.FindElement(By.Name("Password"));
-        password.SendKeys("xPtqNJbcomETL7sSDnaCRMKr@"); 
-        Thread.Sleep(millisecondsTimeout:5000);  
-// нажать на кнопку "войти"
-        var Enter = driver.FindElement(By.Name("button")); 
-        Enter.Click();
-        Thread.Sleep(millisecondsTimeout:5000);  
+        password.SendKeys("xPtqNJbcomETL7sSDnaCRMKr@");
 
-// 7
+// - нажать на кнопку "войти"
+        var enter = driver.FindElement(By.Name("button"));
+        enter.Click();
+                Thread.Sleep(3000);
 
-// проверяем что мы находимся на нужной странице 
-        var currentURL = driver.Url;
-        Assert.That( currentURL == "https://staff-testing.testkontur.ru/news");
+// ожидание
+//Thread.Sleep(3000); //плохой вариант
+
+// - проверяем что мы находимся на нужной странице
+        var currentUrl = driver.Url;
+        currentUrl.Should().Be("https://staff-testing.testkontur.ru/news");
+
+
+                //Assert.That(currentUrl == "https://staff-testing.testkontur.ru/news","current url = " + currentUrl + " а должен быть https://staff-testing.testkontur.ru/news");
+
+//currentUrl.Should().Be("https://staff-testing.testkontur.ru/news");
+
 // закрываем браузер и убиваем процесс драйвера
+
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
         driver.Quit();
     }
-}                              
+}
