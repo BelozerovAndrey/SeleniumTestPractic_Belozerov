@@ -33,8 +33,8 @@ public class seleniumtestforpractic
 
 // проверяем что мы находимся на нужной странице 
         var currentURL = driver.Url;
-        Assert.That( currentURL == "https://staff-testing.testkontur.ru/news2");
+        Assert.That( currentURL == "https://staff-testing.testkontur.ru/news");
 // закрываем браузер и убиваем процесс драйвера
         driver.Quit();
     }
-}
+}                              
