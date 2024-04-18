@@ -2,13 +2,11 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Internal.Logging;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+namespace Seleniumtestforpractic;
 
-namespace ForGitExtensions;
-
-public class SeleniumTestsForPractice
+public class SeleniumTestsForPractic
 {
 
     public ChromeDriver driver;
@@ -22,18 +20,13 @@ public class SeleniumTestsForPractice
 // - зайти в хром ( с помощью вебдрайвера)
         driver = new ChromeDriver(options);
         driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5); // неявное ожидание
-
+       // var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2)); явное ожидание и скок тип ожидает, каждые 2 секунды например.
 
 // - перейти по урлу https://staff-testing.testkontur.ru
 
         driver.Navigate().GoToUrl("https://staff-testing.testkontur.ru");
 
-//Ожидание появления страницы и отрисовки элементов в верстке
 
-//Thread.Sleep(3000); - плохой вариант
-
-// var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3)); - явное ожидание
-// wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Username")));
 
 // - ввести логин и пароль
         var login = driver.FindElement(By.Id("Username"));
@@ -45,10 +38,15 @@ public class SeleniumTestsForPractice
 // - нажать на кнопку "войти"
         var enter = driver.FindElement(By.Name("button"));
         enter.Click();
-                Thread.Sleep(3000);
+        var news = driver.FindElement(By.CssSelector("[data-tid='Title']"));
+        //wait.Until(ExpectedConditions.UrlContains("https://staff-testing.testkontur.ru/news")); // я ожидаю, что после клика у меня урл(UrlContains) будет содержать новость, работает только с var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));  
 
 // ожидание
 //Thread.Sleep(3000); //плохой вариант
+
+
+// var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3)); - явное ожидание
+// wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Username")));
 
 // - проверяем что мы находимся на нужной странице
         var currentUrl = driver.Url;
