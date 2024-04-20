@@ -4,5 +4,6 @@
     &lt;TestId&gt;NUnit3x::FA335478-3072-43CC-9B35-D84FBE20A5CF::net6.0::Seleniumtestforpractic.SeleniumTestsForPractic.CommunityСreation&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FA335478-3072-43CC-9B35-D84FBE20A5CF::net6.0::Seleniumtestforpractic.SeleniumTestsForPractic.CommunityDelete&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FA335478-3072-43CC-9B35-D84FBE20A5CF::net6.0::Seleniumtestforpractic.SeleniumTestsForPractic.CreateDiscussion&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FA335478-3072-43CC-9B35-D84FBE20A5CF::net6.0::Seleniumtestforpractic.SeleniumTestsForPractic.DeleteDiscussion&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
