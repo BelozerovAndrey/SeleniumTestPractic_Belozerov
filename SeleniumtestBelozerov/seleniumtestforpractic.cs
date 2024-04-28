@@ -50,7 +50,7 @@ public class SeleniumTestsForPractic
         var DeleteButtonexpectation  = driver.FindElement(By.CssSelector(".react-ui-button-caption"));
         var DeleteButton2  = driver.FindElement(By.CssSelector(".react-ui-button-caption"));
         DeleteButton2.Click();
-        var newspage = driver.FindElement(By.CssSelector("[data-tid='Title']"));
+        var newspage = driver.FindElement(By.CssSelector("[data-tid='Feed']"));
         PageNews(); //Проверяем, что по завершению действий мы на странице новостей
         // Ранее был тест на проверку удаления, но проверка результата рисуется в моей голове очень сложно, не успел бы сделать на нее правки вовремя,
         // тут же какой-то запрос на бек нужен поди, чтобы проверить реально ли оно удалилось, или сделать какой-то более длинный код здесь, чтобы он сначала считывал как-то id созданного сообщества
