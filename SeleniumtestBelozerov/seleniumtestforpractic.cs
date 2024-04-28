@@ -18,17 +18,15 @@ public class SeleniumTestsForPractic
         var options = new ChromeOptions();
         options.AddArguments("--no-sandbox", "--start-maximized", "--disable-extensions");
         driver = new ChromeDriver(options);
-        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(6);
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
         Autorization();
         
     }
     [Test] //проверяем авторизацию
     public void Authorization()
     {
-        
-        var news = driver.FindElement(By.CssSelector("[data-tid='Title']")); 
-        var currentUrl = driver.Url;
-        currentUrl.Should().Be("https://staff-testing.testkontur.ru/news");
+        PageNews(); //метод проверки, что мы оказались на странице новостей.
+
     }
 
     [Test] // Проверяем создание сообщества
@@ -39,10 +37,10 @@ public class SeleniumTestsForPractic
         
         
         var CommunityManagement = driver.FindElement(By.CssSelector("[data-tid='Title']"));
-        CommunityManagement.Should().NotBeNull(); // проверяем, что сообщество создалось и мы попали в упарвление сообществом.
+        CommunityManagement.Should().NotBeNull(); // проверяем, что сообщество создалось и мы попали в управление сообществом.
 
     }
-    [Test] //Проверяем удаление сообщества
+    [Test] //Проверяем, что после завершения действий по удалению сообщества нас переносит на страницу новостей.
     public void CommunityDelete() 
      {
         
@@ -52,10 +50,14 @@ public class SeleniumTestsForPractic
         var DeleteButtonexpectation  = driver.FindElement(By.CssSelector(".react-ui-button-caption"));
         var DeleteButton2  = driver.FindElement(By.CssSelector(".react-ui-button-caption"));
         DeleteButton2.Click();
-        var newspage = driver.FindElement(By.CssSelector("[data-tid='PageHeader']")); //проверяем, что удаление произошло и нас переместило на старницу новостей
-        
-        
-        
+        var newspage = driver.FindElement(By.CssSelector("[data-tid='Title']"));
+        PageNews(); //Проверяем, что по завершению действий мы на странице новостей
+        // Ранее был тест на проверку удаления, но проверка результата рисуется в моей голове очень сложно, не успел бы сделать на нее правки вовремя,
+        // тут же какой-то запрос на бек нужен поди, чтобы проверить реально ли оно удалилось, или сделать какой-то более длинный код здесь, чтобы он сначала считывал как-то id созданного сообщества
+        // а потом бы мы уже могли проверить, что этот id отсутсвует на странице сообществ после удаления.
+
+
+
      }
 
     [Test] //проверяем, что работает переход в настройки
@@ -66,10 +68,12 @@ public class SeleniumTestsForPractic
         var Settingsexpectation = driver.FindElement(By.CssSelector("[data-tid='Settings']"));
         var Settings = driver.FindElement(By.CssSelector("[data-tid='Settings']"));
         Settings.Click();
-        var SettingsPage = driver.FindElement(By.CssSelector("[data-tid='ModalPageBody']"));//проверяем, что мы в нужном месте.
-     
-        
-        
+        var SettingsPage = driver.FindElement(By.CssSelector("[data-tid='ModalPageBody']"));//ожидание прогрузки
+        SettingsPage.Should().NotBeNull(); // Проверяем что мы в разделе настроек
+
+
+
+
     }
 
     [Test] // Проверяем срабатывание кнопки "закрыть" в настройках сообщества.
@@ -95,16 +99,16 @@ public class SeleniumTestsForPractic
 {
     var communities = driver.FindElement(By.CssSelector("[data-tid='Community']"));
     communities.Click();
-    var ButtonCreation = driver.FindElement(By.CssSelector("[fill-rule='evenodd']"));
+    var ButtonCreation = driver.FindElement(By.CssSelector("[fill-rule='evenodd']")); //в комбинации с тем, что закинули в сетап, рабоатет как ожидание
     
     var Creation  = driver.FindElement(By.XPath("/html/body/div/section/section[2]/section/div[2]/span/button"));
     Creation.Click();
-    var fieldNameCommunites = driver.FindElement(By.CssSelector("[placeholder='Название сообщества']"));
+    var fieldNameCommunites = driver.FindElement(By.CssSelector("[placeholder='Название сообщества']")); 
     var NameCommunites  = driver.FindElement(By.XPath("/html/body/div[2]/div/div[2]/div/div/div/div/div[3]/div[2]/div/span/div/div[2]/div[1]/span/label/div/div/textarea"));
     NameCommunites.SendKeys("Название сообщества");
     var fieldcommunitydescription  = driver.FindElement(By.CssSelector("[placeholder='Описание сообщества']"));
     fieldcommunitydescription.Click();
-    fieldcommunitydescription.SendKeys(text: "описание сообщества");
+    fieldcommunitydescription.SendKeys(text: "описание сообщества"); 
     var CreationButter  = driver.FindElement(By.CssSelector(".react-ui-m0adju"));
     CreationButter.Click();
     
@@ -127,6 +131,11 @@ public class SeleniumTestsForPractic
         var enter = driver.FindElement(By.Name("button"));
         enter.Click();
         }
+    public void PageNews() // метод проверки, что находимся на старнице новостей
+    { var news = driver.FindElement(By.CssSelector("[data-tid='Title']")); 
+        var currentUrl = driver.Url;
+        currentUrl.Should().Be("https://staff-testing.testkontur.ru/news"); //Проверяем, что она прошла и мы там где надо
+                                                                            }
 [TearDown]
     public void TearDown()
     {
